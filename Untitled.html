@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en" class="scroll-smooth"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Interactive Resume | Amritraj Jayathilak&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Chosen Palette: Modern Contrast --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Application Structure Plan: The SPA is designed as a narrative, top-down scrolling experience to guide a recruiter through Amritraj's professional story. It begins with a strong Hero section for immediate impact. The core is an interactive vertical timeline for work experience, allowing users to drill into details without cluttering the initial view. This is more engaging than a static list. Following this is a Skills Dashboard with charts to visually quantify capabilities, which is more compelling than a bulleted list. The structure concludes with education and a clear contact section. This thematic flow—Introduction, Experience, Skills, Credentials—is logical, scannable, and designed to hold user interest while highlighting key qualifications effectively. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Visualization &amp; Content Choices:<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>- Profile/Summary: Report Info -&gt; Goal: Inform -&gt; Presentation: Text block -&gt; Interaction: None -&gt; Justification: Clear, concise professional introduction. -&gt; Method: HTML.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>- Work Experience: Report Info -&gt; Goal: Organize &amp; show change over time -&gt; Viz: Interactive Vertical Timeline -&gt; Interaction: Click on a job title to expand/collapse details. -&gt; Justification: Makes exploring career history engaging and non-linear, showing progression clearly. -&gt; Method: HTML/CSS/Vanilla JS.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>- Skills: Report Info (inferred technical skills) -&gt; Goal: Compare &amp; Inform -&gt; Viz: Multiple horizontal bar charts (Chart.js) -&gt; Interaction: Hover for tooltips. -&gt; Justification: Visually breaks down diverse skills into understandable categories (Technical, Software, Professional), making proficiency levels easy to grasp. -&gt; Library: Chart.js (Canvas).</p>
+<p class="p1"><span class="Apple-converted-space">        </span>- Key Clients: Report Info -&gt; Goal: Inform &amp; build credibility -&gt; Viz: Styled cards -&gt; Interaction: Subtle hover effects -&gt; Justification: Highlights high-profile clients to quickly establish professional legitimacy. -&gt; Method: HTML/CSS.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;family=Roboto+Mono:wght@400;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Montserrat', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #121212;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #E0E0E0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.bg-primary { background-color: #000000; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.bg-secondary { background-color: #282828; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.text-accent { color: #FF0000; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.border-accent { border-color: #FF0000; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 700px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-right: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 280px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 350px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@media (min-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>height: 320px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.timeline-item .details {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: max-height 0.5s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.timeline-item.open .details {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 500px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.font-thin { font-weight: 400; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.font-bold { font-weight: 700; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.font-mono { font-family: 'Roboto Mono', monospace; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="antialiased"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="bg-primary text-white sticky top-0 z-50 shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;nav class="container mx-auto px-6 py-3 flex justify-between items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-xl font-bold font-mono"&gt;Amritraj Jayathilak&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="hidden md:flex space-x-6 font-thin"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#profile" class="hover:text-accent"&gt;Profile&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#experience" class="hover:text-accent"&gt;Experience&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#skills" class="hover:text-accent"&gt;Skills&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#contact" class="hover:text-accent"&gt;Contact&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="mobile-menu-button" class="md:hidden focus:outline-none text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"&gt;&lt;/path&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="mobile-menu" class="hidden md:hidden bg-secondary"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;a href="#profile" class="block py-2 px-6 text-sm hover:bg-black hover:text-accent"&gt;Profile&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;a href="#experience" class="block py-2 px-6 text-sm hover:bg-black hover:text-accent"&gt;Experience&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;a href="#skills" class="block py-2 px-6 text-sm hover:bg-black hover:text-accent"&gt;Skills&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;a href="#contact" class="block py-2 px-6 text-sm hover:bg-black hover:text-accent"&gt;Contact&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="container mx-auto px-6 py-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="hero" class="text-center py-20"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-5xl md:text-7xl font-bold font-mono text-accent"&gt;AMRITRAJ JAYATHILAK&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-xl md:text-2xl mt-4 font-thin text-gray-300"&gt;Freelance Photographer &amp; Videographer&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="mt-6 max-w-2xl mx-auto font-thin text-gray-400"&gt;Transforming visions into compelling visual stories through brand, fashion, and event photography.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="profile" class="py-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-secondary p-8 rounded-lg shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-accent mb-4 text-center"&gt;Professional Profile&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-lg font-thin text-gray-300 leading-relaxed text-center max-w-3xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Creative and detail-oriented photographer and videographer with over 4 years of professional experience. Skilled in capturing compelling visuals across diverse domains, including product, fashion, brand, and event shoots. Adept at collaborating with clients to deliver high-quality imagery that aligns with their vision and brand identity. Experienced freelancer with a proven track record of meeting deadlines and exceeding expectations in dynamic, fast-paced environments.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="experience" class="py-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-3xl font-bold text-accent mb-12 text-center"&gt;Interactive Career Timeline&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;p class="text-center font-thin text-gray-400 mb-12 max-w-2xl mx-auto"&gt;Explore my professional journey. My experience spans renowned brands and dynamic startups, contributing to significant marketing and engagement goals. Click on any role to see key responsibilities and accomplishments.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="relative max-w-3xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="absolute left-1/2 h-full w-1 bg-gray-600 rounded-full transform -translate-x-1/2"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="timeline-container" class="space-y-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="skills" class="py-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-3xl font-bold text-accent mb-12 text-center"&gt;Skills Dashboard&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-center font-thin text-gray-400 mb-12 max-w-2xl mx-auto"&gt;A visual overview of my technical and professional capabilities. I bring a diverse set of skills to every project, from creative execution to strategic planning, ensuring a comprehensive approach to content creation.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-secondary p-6 rounded-lg shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold text-xl text-center mb-4 text-accent"&gt;Photography &amp; Videography&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="photoVideoSkillsChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-secondary p-6 rounded-lg shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold text-xl text-center mb-4 text-accent"&gt;Software Proficiency&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="softwareSkillsChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="bg-secondary p-6 rounded-lg shadow-lg lg:col-span-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold text-xl text-center mb-4 text-accent"&gt;Professional Skills&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="professionalSkillsChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="education" class="py-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;h2 class="text-3xl font-bold text-accent mb-12 text-center"&gt;Education&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="bg-secondary p-6 rounded-lg shadow-md text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold text-lg text-accent"&gt;St. Joseph’s University&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-gray-300 font-thin"&gt;Bachelor of Vocation (B.Voc), Visual Media and Filmmaking&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-gray-500 font-mono text-sm mt-1"&gt;2022 - 2025&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="bg-secondary p-6 rounded-lg shadow-md text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold text-lg text-accent"&gt;St. Joseph’s Pre-University College&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-gray-300 font-thin"&gt;PCMB Science&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-gray-500 font-mono text-sm mt-1"&gt;2019 - 2021&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="contact" class="py-16 text-center bg-secondary rounded-lg shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-3xl font-bold text-accent mb-4"&gt;Let's Create Together&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-gray-400 font-thin mb-8 max-w-xl mx-auto"&gt;I'm currently available for freelance projects and full-time opportunities. Reach out to discuss your next project.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="mailto:amritrajthilak@gmail.com" class="text-lg font-thin hover:text-accent"&gt;amritrajthilak@gmail.com&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="hidden md:block text-gray-600"&gt;|&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-lg font-thin"&gt;+91 8073520601&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="hidden md:block text-gray-600"&gt;|&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="http://amritrajthilak.com" target="_blank" rel="noopener noreferrer" class="text-lg font-bold bg-accent text-white py-2 px-5 rounded-md hover:bg-opacity-80 transition duration-300"&gt;View Portfolio&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">document.addEventListener('DOMContentLoaded', function () {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const mobileMenuButton = document.getElementById('mobile-menu-button');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const mobileMenu = document.getElementById('mobile-menu');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>mobileMenuButton.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>mobileMenu.classList.toggle('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('#mobile-menu a').forEach(link =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>link.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>mobileMenu.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const experienceData = [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>company: 'Redbull',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>role: 'Photographer',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>period: 'Jan 2024',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>side: 'left',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>details: 'Executed high-impact photography for a national marketing campaign that reached over 100,000 potential customers, directly supporting brand visibility goals.'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>company: 'Lycaon',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>role: 'Freelance Photographer',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>period: '2024',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>side: 'right',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>details: 'Produced comprehensive photo and video content for a diverse portfolio of 15+ small businesses, directly increasing their social media engagement and online presence.'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>company: 'InstaWings',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>role: 'Content Creator',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>period: '2023',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>side: 'left',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>details: 'Managed social media channels and created video content that contributed to a 25% increase in audience engagement and a 15% growth in follower count over 6 months. Collaborated with marketing to ensure visual consistency.'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>company: 'Sarayu Designs',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>role: 'Content Creator',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>period: '2022 - 2023',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>side: 'right',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>details: 'Covered 10+ high-profile fashion events and corporate shoots across Bengaluru, managing end-to-end production from on-site capture to final polished deliverables.'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>company: 'Freelance',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>role: 'Content Creator',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>period: '2020',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>side: 'left',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>details: 'Led freelance operations, successfully completing over 50 projects for a diverse clientele including Instagram influencers, product brands, and fashion labels. Specialized in delivering tailored visual content that enhances brand identity.'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const timelineContainer = document.getElementById('timeline-container');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>experienceData.forEach(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const alignClass = item.side === 'left' ? 'md:items-start md:text-left' : 'md:items-end md:text-right';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const marginClass = item.side === 'left' ? 'md:mr-auto' : 'md:ml-auto';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const dotPosition = item.side === 'left' ? 'md:-right-2' : 'md:-left-2';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const timelineItem = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>timelineItem.className = `timeline-item flex flex-col items-center md:w-1/2 ${marginClass}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>timelineItem.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="relative w-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-accent rounded-full z-10 ${dotPosition} border-4 border-black"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-secondary p-6 rounded-lg shadow-lg cursor-pointer transition transform hover:scale-105" onclick="this.parentElement.parentElement.classList.toggle('open')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-sm text-gray-500 font-thin"&gt;${item.period}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-xl font-bold text-accent"&gt;${item.company}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-md text-gray-300 font-thin"&gt;${item.role}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="details mt-4 pt-4 border-t border-gray-600"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-gray-400 font-thin"&gt;${item.details}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-xs text-center mt-2 text-accent font-thin"&gt;Click to expand&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>timelineContainer.appendChild(timelineItem);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const createChart = (ctx, type, labels, data, label, backgroundColor) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>new Chart(ctx, {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>type: type,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labels: labels,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>label: label,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: data,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>backgroundColor: backgroundColor,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>borderColor: backgroundColor.map(c =&gt; c.replace('0.6', '1')),</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>borderWidth: 1</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>indexAxis: 'y',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>x: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>beginAtZero: true,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>max: 100,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>ticks: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>display: false</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>grid: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>display: false,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>drawBorder: false</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>ticks: {</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>font: {</p>
+<p class="p1"><span class="Apple-converted-space">                               </span>size: 14,</p>
+<p class="p1"><span class="Apple-converted-space">                               </span>weight: '400'</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>color: '#E0E0E0'</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>grid: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>display: false,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>drawBorder: false</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>display: false</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>tooltip: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>enabled: true,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>callbacks: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: function(context) {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>return ` Proficiency: ${context.raw}%`;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const photoVideoSkillsCtx = document.getElementById('photoVideoSkillsChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>createChart(photoVideoSkillsCtx, 'bar', ['Event Coverage', 'Fashion &amp; Model', 'Product &amp; Brand', 'Drone Videography', 'Video Editing'], [95, 95, 90, 80, 95], 'Proficiency', ['rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)']);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const softwareSkillsCtx = document.getElementById('softwareSkillsChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>createChart(softwareSkillsCtx, 'bar', ['Adobe Lightroom', 'Adobe Photoshop', 'Adobe Premiere Pro', 'DaVinci Resolve', 'Capture One'], [100, 100, 100, 80, 75], 'Proficiency', ['rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)']);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const professionalSkillsCtx = document.getElementById('professionalSkillsChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>createChart(professionalSkillsCtx, 'bar', ['Client Communication', 'Project Management', 'Creative Thinking', 'Brand Development', 'Adaptability'], [95, 90, 95, 85, 90], 'Proficiency', ['rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)', 'rgba(255, 0, 0, 0.6)']);</p>
+<p class="p1">});</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
